@@ -68,7 +68,7 @@ func SendAnonymizedAnalytics(buildRunResults models.BuildRunResultsModel) error 
 		}
 
 		stepAnalytics, runtime = append(stepAnalytics, analyticsModels.StepAnalytics{
-			StepID:      stepResult.StepInfo.ID,
+			StepID:      "fake-step-id",
 			StepTitle:   pointers.StringWithDefault(stepResult.StepInfo.Step.Title, ""),
 			StepVersion: stepResult.StepInfo.Version,
 			StepSource:  pointers.StringWithDefault(stepResult.StepInfo.Step.SourceCodeURL, ""),
