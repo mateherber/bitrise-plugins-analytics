@@ -80,7 +80,7 @@ func SendAnonymizedAnalytics(buildRunResults models.BuildRunResultsModel) error 
 	}
 
 	var body bytes.Buffer
-	if err := json.NewEncoder(&body).Encode(analyticsModels.BuildAnalytics{
+	analytics := analyticsModels.BuildAnalytics{
 		Runtime:       runtime,
 		StartTime:     buildRunResults.StartTime,
 		Platform:      buildRunResults.ProjectType,
@@ -92,7 +92,10 @@ func SendAnonymizedAnalytics(buildRunResults models.BuildRunResultsModel) error 
 		StepAnalytics: stepAnalytics,
 		RepositoryID:  os.Getenv(repoSlug),
 		WorkflowName:  os.Getenv(workflowName),
-	}); err != nil {
+	}
+	log.Infof("Analytics data: %+v", analytics)
+	log.Infof(analyticsBaseURL + "/metrics")
+	if err := json.NewEncoder(&body).Encode(analytics); err != nil {
 		return err
 	}
 
